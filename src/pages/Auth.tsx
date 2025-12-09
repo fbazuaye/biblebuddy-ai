@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
+import SEO from "@/components/SEO";
 
 const authSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -118,6 +119,14 @@ const Auth = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
+      <SEO 
+        title={isSignUp ? "Create Account | ScriptureChat" : "Sign In | ScriptureChat"}
+        description={isSignUp 
+          ? "Create your ScriptureChat account to start your AI-powered Bible study journey with personalized devotionals and scripture insights."
+          : "Sign in to your ScriptureChat account to continue your spiritual growth journey with AI-powered Bible study tools."
+        }
+        canonicalUrl="/auth"
+      />
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8">
