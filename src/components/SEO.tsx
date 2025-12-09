@@ -19,7 +19,7 @@ const SEO = ({
   ogType = "website",
   structuredData,
 }: SEOProps) => {
-  const siteUrl = "https://scripturechat.lovable.app";
+  const siteUrl = "https://biblebuddy-ai.lovable.app";
   const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
 
   return (

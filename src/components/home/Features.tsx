@@ -25,22 +25,33 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="py-20 px-4">
+    <section 
+      id="features" 
+      aria-labelledby="features-heading" 
+      className="py-20 px-4"
+    >
       <div className="container mx-auto">
+        <h2 
+          id="features-heading" 
+          className="text-3xl font-bold text-center text-foreground mb-12"
+        >
+          Our Features
+        </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
-            <div
+            <article
               key={feature.title}
               className="glass-card p-6 text-center transition-all hover:scale-105 hover:border-primary/50"
+              aria-label={feature.title}
             >
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10">
-                <feature.icon className="h-7 w-7 text-primary" />
+                <feature.icon className="h-7 w-7 text-primary" aria-hidden="true" />
               </div>
               <h3 className="mb-2 text-lg font-semibold text-foreground">
                 {feature.title}
               </h3>
               <p className="text-sm text-muted-foreground">{feature.description}</p>
-            </div>
+            </article>
           ))}
         </div>
       </div>
