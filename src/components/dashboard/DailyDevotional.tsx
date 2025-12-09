@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Heart, RefreshCw, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Devotional {
   title: string;
@@ -14,30 +15,53 @@ interface Devotional {
 const DailyDevotional = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [devotional, setDevotional] = useState<Devotional>({
-    title: "Walking in Faith",
-    verse: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-    reference: "Proverbs 3:5-6",
-    reflection: "Today's devotional reminds us that true wisdom comes from trusting God completely. When we try to figure everything out on our own, we often miss the path God has prepared for us. But when we surrender our understanding to His wisdom, He guides us with perfect clarity.",
-    prayer: "Heavenly Father, help me to trust You more deeply today. When I'm tempted to rely on my own understanding, remind me of Your perfect wisdom and love. Guide my steps and make my paths straight. In Jesus' name, Amen.",
-  });
+  const [devotional, setDevotional] = useState<Devotional | null>(null);
 
-  const handleRefresh = async () => {
+  const generateDevotional = async () => {
     setIsLoading(true);
-    // Simulated refresh - replace with actual AI integration
-    setTimeout(() => {
-      setDevotional({
-        title: "Finding Peace in His Presence",
-        verse: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
-        reference: "Isaiah 26:3",
-        reflection: "In a world full of anxiety and uncertainty, God offers us something extraordinary - perfect peace. This peace isn't dependent on our circumstances but on where we fix our minds. When we keep our focus on God, trusting in His character and promises, He becomes our anchor in every storm.",
-        prayer: "Lord, I choose to fix my mind on You today. When worries try to overwhelm me, help me remember Your faithfulness. Fill me with Your peace that surpasses all understanding. Amen.",
+
+    try {
+      const response = await supabase.functions.invoke("chat-ai", {
+        body: {
+          messages: [{ role: "user", content: "Generate a daily devotional for spiritual growth and encouragement." }],
+          type: "devotional",
+        },
       });
+
+      if (response.error) throw response.error;
+
+      const content = response.data?.content;
+      if (content) {
+        try {
+          const parsed = JSON.parse(content);
+          setDevotional(parsed);
+        } catch {
+          toast({
+            title: "Error",
+            description: "Failed to parse devotional",
+            variant: "destructive",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Devotional error:", error);
+      toast({
+        title: "Failed to generate devotional",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
+  useEffect(() => {
+    generateDevotional();
+  }, []);
+
   const handleSave = () => {
+    if (!devotional) return;
+    
     const saved = JSON.parse(localStorage.getItem("savedDevotionals") || "[]");
     saved.push({ ...devotional, savedAt: new Date().toISOString() });
     localStorage.setItem("savedDevotionals", JSON.stringify(saved));
@@ -46,6 +70,26 @@ const DailyDevotional = () => {
       description: "Added to your saved devotionals.",
     });
   };
+
+  if (isLoading && !devotional) {
+    return (
+      <div className="glass-card p-8 text-center">
+        <RefreshCw className="h-8 w-8 text-primary mx-auto animate-spin" />
+        <p className="mt-4 text-muted-foreground">Generating your devotional...</p>
+      </div>
+    );
+  }
+
+  if (!devotional) {
+    return (
+      <div className="glass-card p-8 text-center">
+        <p className="text-muted-foreground">Failed to load devotional.</p>
+        <Button className="mt-4" onClick={generateDevotional}>
+          Try Again
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="glass-card p-6 md:p-8">
@@ -58,7 +102,7 @@ const DailyDevotional = () => {
           <Button variant="ghost" size="icon" onClick={handleSave}>
             <Bookmark className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" onClick={handleRefresh} disabled={isLoading}>
+          <Button variant="ghost" size="icon" onClick={generateDevotional} disabled={isLoading}>
             <RefreshCw className={`h-5 w-5 ${isLoading ? "animate-spin" : ""}`} />
           </Button>
         </div>
