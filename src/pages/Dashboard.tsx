@@ -10,6 +10,7 @@ import DailyDevotional from "@/components/dashboard/DailyDevotional";
 import SavedContent from "@/components/dashboard/SavedContent";
 import JourneyDashboard from "@/components/dashboard/JourneyDashboard";
 import StudyPlans from "@/components/dashboard/StudyPlans";
+import SEO from "@/components/SEO";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("chat");
@@ -44,6 +45,11 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="My Dashboard | ScriptureChat"
+        description="Access your personalized Bible study dashboard with AI chat, scripture search, daily devotionals, prayer journal, and spiritual growth tracking."
+        canonicalUrl="/dashboard"
+      />
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">

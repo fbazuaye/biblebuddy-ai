@@ -1,0 +1,19 @@
+{
+  "name": "ScriptureChat - AI-Powered Bible Study",
+  "short_name": "ScriptureChat",
+  "description": "Experience intelligent Bible study with AI-powered conversations, scripture search, daily devotionals, and spiritual growth tracking.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#d4a574",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["education", "lifestyle", "books"],
+  "lang": "en-US"
+}
