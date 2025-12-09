@@ -3,6 +3,7 @@ import { Search, Bookmark, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Verse {
   reference: string;
@@ -19,28 +20,41 @@ const ScriptureSearch = () => {
   const handleSearch = async () => {
     if (!query.trim()) return;
     setIsLoading(true);
+    setResults([]);
 
-    // Simulated search - replace with actual AI integration
-    setTimeout(() => {
-      setResults([
-        {
-          reference: "John 3:16",
-          text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
-          explanation: "This verse captures the essence of God's love and the gift of salvation through Jesus Christ.",
+    try {
+      const response = await supabase.functions.invoke("chat-ai", {
+        body: {
+          messages: [{ role: "user", content: `Find Bible verses about: ${query}` }],
+          type: "search",
         },
-        {
-          reference: "Romans 8:28",
-          text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
-          explanation: "A reminder that God's providence works through all circumstances for believers.",
-        },
-        {
-          reference: "Jeremiah 29:11",
-          text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
-          explanation: "God's promise of hope and a purposeful future for His people.",
-        },
-      ]);
+      });
+
+      if (response.error) throw response.error;
+
+      const content = response.data?.content;
+      if (content) {
+        try {
+          const parsed = JSON.parse(content);
+          setResults(Array.isArray(parsed) ? parsed : []);
+        } catch {
+          toast({
+            title: "Error",
+            description: "Failed to parse search results",
+            variant: "destructive",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      toast({
+        title: "Search failed",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleSave = (verse: Verse) => {

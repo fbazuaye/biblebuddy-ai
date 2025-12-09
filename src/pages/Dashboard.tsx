@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BookOpen, MessageSquare, Search, Heart, Bookmark, LogOut, Compass, BookMarked } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/hooks/useAuth";
 import ChatInterface from "@/components/dashboard/ChatInterface";
 import ScriptureSearch from "@/components/dashboard/ScriptureSearch";
 import DailyDevotional from "@/components/dashboard/DailyDevotional";
@@ -12,6 +13,34 @@ import StudyPlans from "@/components/dashboard/StudyPlans";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("chat");
+  const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <BookOpen className="h-12 w-12 text-primary mx-auto animate-pulse" />
+          <p className="mt-4 text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen">
@@ -25,11 +54,9 @@ const Dashboard = () => {
               <p className="text-xs text-muted-foreground">AI-Powered Bible Study</p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/">
-              <LogOut className="mr-2 h-4 w-4" />
-              Sign Out
-            </Link>
+          <Button variant="ghost" size="sm" onClick={handleSignOut}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Sign Out
           </Button>
         </div>
       </header>
