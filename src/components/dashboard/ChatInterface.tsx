@@ -17,7 +17,7 @@ const ChatInterface = () => {
     {
       id: "1",
       role: "assistant",
-      content: "Hello! I'm your AI Bible study companion powered by GPT-5. Ask me anything about scripture, faith, or spiritual guidance. How can I help you today?",
+      content: "Hello! I'm your AI Bible study companion. Ask me anything about scripture, faith, or spiritual guidance. How can I help you today?",
     },
   ]);
   const [input, setInput] = useState("");
