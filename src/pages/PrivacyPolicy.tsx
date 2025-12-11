@@ -215,8 +215,8 @@ const PrivacyPolicy = () => {
                 </p>
                 <p className="text-foreground">
                   <strong>Email:</strong>{" "}
-                  <a href="mailto:privacy@scripturechat.com" className="text-primary hover:underline">
-                    privacy@scripturechat.com
+                  <a href="mailto:scripturechat@livegig.com.ng" className="text-primary hover:underline">
+                    scripturechat@livegig.com.ng
                   </a>
                 </p>
               </div>
