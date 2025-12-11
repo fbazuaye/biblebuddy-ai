@@ -176,14 +176,21 @@ const PrivacyPolicy = () => {
               </div>
             </section>
 
-            {/* Children's Privacy */}
+            {/* Family & Young Users */}
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">Children's Privacy</h2>
-              <p className="text-foreground/90">
-                ScriptureChat is not intended for children under 13 years of age. We do not knowingly collect 
-                personal information from children under 13. If you are a parent or guardian and believe your 
-                child has provided us with personal information, please contact us so we can delete it.
-              </p>
+              <h2 className="text-2xl font-semibold text-foreground">Family & Young Users</h2>
+              <div className="bg-card border border-border rounded-lg p-6 space-y-3">
+                <p className="text-foreground/90">
+                  We welcome families exploring Scripture together! For users under 13, we encourage parents 
+                  and guardians to guide their child's experience and create accounts on their behalf.
+                </p>
+                <p className="text-foreground/90">
+                  To protect young users, we do not knowingly collect personal information directly from 
+                  children under 13 without parental consent. If you're a parent or guardian with questions 
+                  about your child's use of ScriptureChat, please reach out – we're here to help ensure 
+                  a safe and meaningful experience for your family.
+                </p>
+              </div>
             </section>
 
             {/* Changes to Policy */}
