@@ -183,10 +183,10 @@ const Contact = () => {
                 You can also reach us directly at:
               </p>
               <a
-                href="mailto:support@scripturechat.com"
+                href="mailto:scripturechat@livegig.com.ng"
                 className="text-primary hover:underline font-medium"
               >
-                support@scripturechat.com
+                scripturechat@livegig.com.ng
               </a>
             </div>
 
