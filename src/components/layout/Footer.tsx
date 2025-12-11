@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="border-t border-border/30 py-8">
@@ -5,9 +7,13 @@ const Footer = () => {
         <p className="text-sm text-muted-foreground">
           Designed by Frank Bazuaye: Powered by LiveGig Ltd
         </p>
-        <p className="text-xs text-muted-foreground/70">
-          © {new Date().getFullYear()} ScriptureChat. All rights reserved.
-        </p>
+        <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground/70">
+          <span>© {new Date().getFullYear()} ScriptureChat. All rights reserved.</span>
+          <span>•</span>
+          <Link to="/privacy" className="hover:text-primary transition-colors">
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );
