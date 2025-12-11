@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      milestones: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          requirement_count: number
+          requirement_type: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          requirement_count?: number
+          requirement_type: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          requirement_count?: number
+          requirement_type?: string
+        }
+        Relationships: []
+      }
+      prayer_journals: {
+        Row: {
+          answered_at: string | null
+          content: string
+          created_at: string
+          id: string
+          is_answered: boolean | null
+          prayer_type: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          is_answered?: boolean | null
+          prayer_type?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          is_answered?: boolean | null
+          prayer_type?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -37,6 +103,71 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      study_sessions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          duration_minutes: number | null
+          id: string
+          notes: string | null
+          scripture_reference: string | null
+          started_at: string
+          topic: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          notes?: string | null
+          scripture_reference?: string | null
+          started_at?: string
+          topic: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          notes?: string | null
+          scripture_reference?: string | null
+          started_at?: string
+          topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_milestones: {
+        Row: {
+          earned_at: string
+          id: string
+          milestone_id: string
+          user_id: string
+        }
+        Insert: {
+          earned_at?: string
+          id?: string
+          milestone_id: string
+          user_id: string
+        }
+        Update: {
+          earned_at?: string
+          id?: string
+          milestone_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_milestones_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "milestones"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
