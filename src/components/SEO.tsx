@@ -15,11 +15,12 @@ const SEO = ({
   description = "Experience intelligent Bible study with AI-powered conversations, scripture search, daily devotionals, prayer journaling, and personalized spiritual growth tracking.",
   keywords = "Bible study, AI Bible assistant, scripture search, daily devotional, prayer journal, spiritual growth, Christian app, Bible chat, faith companion",
   canonicalUrl,
-  ogImage = "/og-image.png",
+  ogImage = "/placeholder.svg",
   ogType = "website",
   structuredData,
 }: SEOProps) => {
-  const siteUrl = "https://biblebuddy-ai.lovable.app";
+  // Use window.location.origin for dynamic URL resolution
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
   const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
 
   return (
