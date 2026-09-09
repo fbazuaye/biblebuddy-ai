@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { BookOpen, MessageSquare, Search, Heart, Bookmark, LogOut, Compass, BookMarked } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { BookOpen, MessageSquare, Search, Heart, Bookmark, LogOut, Compass, BookMarked, Users } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import ChatInterface from "@/components/dashboard/ChatInterface";
 import ScriptureSearch from "@/components/dashboard/ScriptureSearch";
 import DailyDevotional from "@/components/dashboard/DailyDevotional";
@@ -15,6 +16,7 @@ import SEO from "@/components/SEO";
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("chat");
   const { user, loading, signOut } = useAuth();
+  const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,10 +62,20 @@ const Dashboard = () => {
               <p className="text-xs text-muted-foreground">AI-Powered Bible Study</p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={handleSignOut}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/admin">
+                  <Users className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Admin</span>
+                </Link>
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={handleSignOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
 
