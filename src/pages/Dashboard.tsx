@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { BookOpen, MessageSquare, Search, Heart, Bookmark, LogOut, Compass, BookMarked } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { BookOpen, MessageSquare, Search, Heart, Bookmark, LogOut, Compass, BookMarked, Users } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import ChatInterface from "@/components/dashboard/ChatInterface";
 import ScriptureSearch from "@/components/dashboard/ScriptureSearch";
 import DailyDevotional from "@/components/dashboard/DailyDevotional";
