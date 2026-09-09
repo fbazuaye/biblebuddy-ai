@@ -52,7 +52,7 @@ const StudySessionTracker = ({ onUpdate }: StudySessionTrackerProps) => {
   }, [user]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
     if (activeSession) {
       interval = setInterval(() => {
         const start = new Date(activeSession.started_at).getTime();
