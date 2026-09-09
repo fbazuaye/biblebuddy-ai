@@ -16,6 +16,7 @@ import SEO from "@/components/SEO";
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("chat");
   const { user, loading, signOut } = useAuth();
+  const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
 
   useEffect(() => {
